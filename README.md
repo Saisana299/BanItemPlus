@@ -1,5 +1,5 @@
 # BanItemPlus
-[![GitHub license](https://img.shields.io/badge/license-UIUC/NCSA-blue)](https://github.com/Saisana299/BanItemPlus/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-UIUC/NCSA-blue)](https://github.com/Saisana299/BanItemPlus/blob/master/LICENCE)
 [![GitHub license](https://img.shields.io/badge/release-v1.0.0-green)](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.0.0)  
 BanしたアイテムをOP以外が使えないようにするプラグインです
 
