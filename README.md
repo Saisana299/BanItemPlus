@@ -1,10 +1,10 @@
 # BanItemPlus
 [![GitHub license](https://img.shields.io/badge/license-UIUC/NCSA-blue)](https://github.com/Saisana299/BanItemPlus/blob/master/LICENCE)
-[![GitHub license](https://img.shields.io/badge/release-v1.0.0-green)](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.0.0)  
+[![GitHub license](https://img.shields.io/badge/release-v1.1.0-green)](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.1.0)  
 BanしたアイテムをOP以外が使えないようにするプラグインです
 
 ### ダウンロード
-ダウンロードはこちら [Download](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.0.0)  
+ダウンロードはこちら [Download](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.1.0)  
   
 ### 使い方  
 - アイテムをBanする  
