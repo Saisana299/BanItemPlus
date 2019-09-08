@@ -8,13 +8,13 @@ BanしたアイテムをOP以外が使えないようにするプラグインで
   
 ### 使い方  
 - アイテムをBanする  
-`/banitem ban <アイテムID> <アイテムMETA値>`
+`/banitem ban <アイテムID> <アイテムMETA値 (任意)>`
 
 - アイテムをUnbanする  
-`/banitem unban <アイテムID> <アイテムMETA値>`
+`/banitem unban <アイテムID> <アイテムMETA値 (任意)>`
 
 - Banされたアイテムを使えるワールドを設定  
-`/banitem whiteworld <アイテムID> <アイテムMETA値>`  
+`/banitem whiteworld <ワールド名> <アイテムID> <アイテムMETA値 (任意)>`  
 `※設定、設定解除も同じコマンドです`
 
 - Banされているアイテム一覧の表示  
