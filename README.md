@@ -1,0 +1,2 @@
+# BanItemPlus
+Banしたアイテムを使えなくします
