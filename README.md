@@ -4,7 +4,7 @@
 BanしたアイテムをOP以外が使えないようにするプラグインです
 
 ### ダウンロード
-ダウンロードはこちら [Download](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.1.0)  
+ダウンロードはこちら [Download](https://github.com/Saisana299/BanItemPlus/releases/tag/v1.0.0)  
   
 ### 使い方  
 - アイテムをBanする  
