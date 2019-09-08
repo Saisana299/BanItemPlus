@@ -27,90 +27,114 @@ class BanItemPlus extends PluginBase {
                 switch ($args[0]) {
                     case "ban":
                         if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem ban <アイテムID> <アイテムMETA値>");
+                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem ban <アイテムID> <アイテムMETA値 (任意)>");
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[1])){
                             $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
                             return true;
                         }
-                        if(!isset($args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値を入力してください");
-                            return true;
-                        }
-                        if(!preg_match("/^[0-9]+$/", $args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
-                            return true;
-                        }
-                        if(!$this->banned->exists($args[1].":".$args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムをbanしました");
-                            $this->banned->set($args[1].":".$args[2], ["whiteworlds"=>array()]);
+                        if(isset($args[2])){
+                        	if(!preg_match("/^[0-9]+$/", $args[2])){
+                            	$sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
+                            	return true;
+                        	}
+                        	if(!$this->banned->exists($args[1].":".$args[2])){
+                            	$sender->sendMessage("[BanItemPlus] アイテム ".$args[1].":".$args[2]." をbanしました");
+                            	$this->banned->set($args[1].":".$args[2], ["whiteworlds"=>array()]);
+                        	}else{
+                            	$sender->sendMessage("[BanItemPlus] 既にbanされています");
+                        	}
                         }else{
-                            $sender->sendMessage("[BanItemPlus] 既にbanされています");
+                        	if(!$this->banned->exists($args[1])){
+                            	$sender->sendMessage("[BanItemPlus] アイテム ".$args[1]." をbanしました");
+                            	$this->banned->set($args[1], ["whiteworlds"=>array()]);
+                        	}else{
+                            	$sender->sendMessage("[BanItemPlus] 既にbanされています");
+                        	}
                         }
                     break;
 
                     case "unban":
                         if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem unban <アイテムID> <アイテムMETA値>");
+                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem unban <アイテムID> <アイテムMETA値 (任意)>");
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[1])){
                             $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
                             return true;
                         }
-                        if(!isset($args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値を入力してください");
-                            return true;
-                        }
-                        if(!preg_match("/^[0-9]+$/", $args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
-                            return true;
-                        }
-                        if($this->banned->exists($args[1].":".$args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのbanを解除しました");
-                            $this->banned->remove($args[1].":".$args[2]);
-                        }else{
-                            $sender->sendMessage("[BanItemPlus] このアイテムはbanされていません");
-                        }
+                        if(isset($args[2])){
+                        	if(!preg_match("/^[0-9]+$/", $args[2])){
+                            	$sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
+                            	return true;
+                        	}
+                        	if($this->banned->exists($args[1].":".$args[2])){
+                            	$sender->sendMessage("[BanItemPlus] アイテム ".$args[1].":".$args[2]." のbanを解除しました");
+                            	$this->banned->remove($args[1].":".$args[2]);
+                        	}else{
+                            	$sender->sendMessage("[BanItemPlus] このアイテムはbanされていません");
+                        	}
+                    	}else{
+                    		if($this->banned->exists($args[1])){
+                            	$sender->sendMessage("[BanItemPlus] アイテム ".$args[1]." のbanを解除しました");
+                            	$this->banned->remove($args[1]);
+                        	}else{
+                            	$sender->sendMessage("[BanItemPlus] このアイテムはbanされていません");
+                        	}
+                    	}
                     break;
 
                     case "whiteworld":
                         if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem whiteworld <アイテムID> <アイテムMETA値> <WORLD名>");
+                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem whiteworld <WORLD名> <アイテムID> <アイテムMETA値 (任意)>");
                             return true;
                         }
-                        if(!preg_match("/^[0-9]+$/", $args[1])){
-                            $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
-                            return true;
-                        }
-                        if(!isset($args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値を入力してください");
-                            return true;
-                        }
-                        if(!preg_match("/^[0-9]+$/", $args[2])){
-                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
-                            return true;
-                        }
-                        if(!isset($args[3])){
+                        if(!isset($args[1])){
                             $sender->sendMessage("[BanItemPlus] ワールド名を入力してください");
                             return true;
                         }
-                        if($this->banned->exists($args[1].":".$args[2])){
-                            $worlds = $this->banned->getAll()[$args[1].":".$args[2]]["whiteworlds"];
-                            if(!in_array($args[3], $worlds)){
-                                array_push($worlds, $args[3]);
-                                $this->banned->set($args[1].":".$args[2], ["whiteworlds" => $worlds]);
-                                $sender->sendMessage("[BanItemPlus] アイテムのwhiteworldを追加しました");
-                            }else{
-                                $world = array_diff($worlds, [$args[3]]);
-                                $world = array_values($world);
-                                $this->banned->set($args[1].":".$args[2], ["whiteworlds" => $world]);
-                                $sender->sendMessage("[BanItemPlus] アイテムのwhiteworldを消去しました");
-                            }
-                        }else{
-                            $sender->sendMessage("[BanItemPlus] アイテムはbanされていません");
+                        if(!preg_match("/^[0-9]+$/", $args[2])){
+                            $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
+                            return true;
                         }
+                        if(isset($args[3])){
+                        	if(!preg_match("/^[0-9]+$/", $args[3])){
+                            	$sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
+                            	return true;
+                        	}
+                        	if($this->banned->exists($args[2].":".$args[3])){
+                            	$worlds = $this->banned->getAll()[$args[2].":".$args[3]]["whiteworlds"];
+                            	if(!in_array($args[1], $worlds)){
+                                	array_push($worlds, $args[1]);
+                                	$this->banned->set($args[2].":".$args[3], ["whiteworlds" => $worlds]);
+                                	$sender->sendMessage("[BanItemPlus] アイテム ".$args[2].":".$args[3]." のwhiteworldを追加しました");
+                            	}else{
+                                	$world = array_diff($worlds, [$args[1]]);
+                                	$world = array_values($world);
+                                	$this->banned->set($args[2].":".$args[3], ["whiteworlds" => $world]);
+                                	$sender->sendMessage("[BanItemPlus] アイテム ".$args[2].":".$args[3]." のwhiteworldを消去しました");
+                            	}
+                        	}else{
+                            	$sender->sendMessage("[BanItemPlus] アイテムはbanされていません");
+                        	}
+                    	}else{
+                        	if($this->banned->exists($args[2])){
+                            	$worlds = $this->banned->getAll()[$args[2]]["whiteworlds"];
+                            	if(!in_array($args[1], $worlds)){
+                                	array_push($worlds, $args[1]);
+                                	$this->banned->set($args[2], ["whiteworlds" => $worlds]);
+                                	$sender->sendMessage("[BanItemPlus] アイテム ".$args[2]." のwhiteworldを追加しました");
+                            	}else{
+                                	$world = array_diff($worlds, [$args[1]]);
+                                	$world = array_values($world);
+                                	$this->banned->set($args[2], ["whiteworlds" => $world]);
+                                	$sender->sendMessage("[BanItemPlus] アイテム ".$args[2]." のwhiteworldを消去しました");
+                            	}
+                        	}else{
+                            	$sender->sendMessage("[BanItemPlus] アイテムはbanされていません");
+                        	}
+                    	}
                     break;
 
                     case "list":

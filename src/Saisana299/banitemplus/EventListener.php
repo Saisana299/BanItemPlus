@@ -36,6 +36,13 @@ class EventListener implements Listener {
             }
             $player->sendPopup("§eこのアイテムの使用は禁止されています");
             $event->setCancelled();
+        }elseif($this->BanItemPlus->banned->exists($id)){
+        	$worlds = $this->BanItemPlus->banned->getAll()[$id]["whiteworlds"];
+            if(in_array($worldname, $worlds)){
+                return true;
+            }
+            $player->sendPopup("§eこのアイテムの使用は禁止されています");
+            $event->setCancelled();
         }
     }
 
@@ -56,6 +63,12 @@ class EventListener implements Listener {
                 return true;
             }
             $event->setCancelled();
+        }elseif($this->BanItemPlus->banned->exists($id)){
+        	$worlds = $this->BanItemPlus->banned->getAll()[$id]["whiteworlds"];
+            if(in_array($worldname, $worlds)){
+                return true;
+            }
+            $event->setCancelled();
         }
     }
 
@@ -72,6 +85,12 @@ class EventListener implements Listener {
         $damage = $event->getItem()->getDamage();
         if($this->BanItemPlus->banned->exists($id.":".$damage)) {
             $worlds = $this->BanItemPlus->banned->getAll()[$id.":".$damage]["whiteworlds"];
+            if(in_array($worldname, $worlds)){
+                return true;
+            }
+            $event->setCancelled();
+        }elseif($this->BanItemPlus->banned->exists($id)){
+        	$worlds = $this->BanItemPlus->banned->getAll()[$id]["whiteworlds"];
             if(in_array($worldname, $worlds)){
                 return true;
             }
