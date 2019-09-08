@@ -90,8 +90,8 @@ class BanItemPlus extends PluginBase {
                             $sender->sendMessage("[BanItemPlus] 使い方：/banitem whiteworld <WORLD名> <アイテムID> <アイテムMETA値 (任意)>");
                             return true;
                         }
-                        if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] ワールド名を入力してください");
+                        if(!isset($args[2])){
+                            $sender->sendMessage("[BanItemPlus] アイテムIDを入力してください");
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[2])){
