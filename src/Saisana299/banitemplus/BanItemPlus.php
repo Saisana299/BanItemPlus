@@ -12,6 +12,7 @@ use pocketmine\utils\Config;
 class BanItemPlus extends PluginBase {
 
     public function onEnable() {
+    	$this->getLogger()->info("§6BanItemPlusを読み込みました by Saisana299");
         $this->banned = new Config($this->getDataFolder() . "banned.yml", Config::YAML);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     }
@@ -20,17 +21,17 @@ class BanItemPlus extends PluginBase {
         switch (strtolower($command->getName())) {
             case "banitem":
             if(!isset($args[0])){
-                $sender->sendMessage("[BanItemPlus] 使い方：/banitem <ban/unban/list/whiteworld>"); 
+                $sender->sendMessage("[BanItemPlus] 使い方：/banitem <ban/unban/whiteworld/list>"); 
                 return true;
             }
                 switch ($args[0]) {
                     case "ban":
                         if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem ban <ID> <META>");
+                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem ban <アイテムID> <アイテムMETA値>");
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[1])){
-                            $sender->sendMessage("[BanItemPlus] IDは数字で入力してください");
+                            $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
                             return true;
                         }
                         if(!isset($args[2])){
@@ -38,7 +39,7 @@ class BanItemPlus extends PluginBase {
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[2])){
-                            $sender->sendMessage("[BanItemPlus] META値は数字で入力してください");
+                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
                             return true;
                         }
                         if(!$this->banned->exists($args[1].":".$args[2])){
@@ -51,11 +52,11 @@ class BanItemPlus extends PluginBase {
 
                     case "unban":
                         if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem unban <ID> <META>");
+                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem unban <アイテムID> <アイテムMETA値>");
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[1])){
-                            $sender->sendMessage("[BanItemPlus] IDは数字で入力してください");
+                            $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
                             return true;
                         }
                         if(!isset($args[2])){
@@ -63,7 +64,7 @@ class BanItemPlus extends PluginBase {
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[2])){
-                            $sender->sendMessage("[BanItemPlus] META値は数字で入力してください");
+                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
                             return true;
                         }
                         if($this->banned->exists($args[1].":".$args[2])){
@@ -74,31 +75,13 @@ class BanItemPlus extends PluginBase {
                         }
                     break;
 
-                    case "list":
-                        $alldata = $this->banned->getAll();
-                        $sender->sendMessage("[BanItemPlus] BanItemリスト (アイテムID <使用可能ワールド>)");
-                        foreach ($alldata as $key => $value) {
-                            $worlds = "";
-                            foreach ($value as $key2 => $value2) {
-                                foreach ($value2 as $world) {
-                                    $worlds .= " ".$world;
-                                } 
-                            }
-                            if($worlds === ""){
-                                $sender->sendMessage("{$key}");
-                            }else{
-                                $sender->sendMessage("{$key} <{$worlds} >");
-                            }
-                        }
-                    break;
-
                     case "whiteworld":
                         if(!isset($args[1])){
-                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem whiteworld <ID> <META> <WORLD>");
+                            $sender->sendMessage("[BanItemPlus] 使い方：/banitem whiteworld <アイテムID> <アイテムMETA値> <WORLD名>");
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[1])){
-                            $sender->sendMessage("[BanItemPlus] IDは数字で入力してください");
+                            $sender->sendMessage("[BanItemPlus] アイテムIDは数字で入力してください");
                             return true;
                         }
                         if(!isset($args[2])){
@@ -106,7 +89,7 @@ class BanItemPlus extends PluginBase {
                             return true;
                         }
                         if(!preg_match("/^[0-9]+$/", $args[2])){
-                            $sender->sendMessage("[BanItemPlus] META値は数字で入力してください");
+                            $sender->sendMessage("[BanItemPlus] アイテムのMETA値は数字で入力してください");
                             return true;
                         }
                         if(!isset($args[3])){
@@ -129,9 +112,27 @@ class BanItemPlus extends PluginBase {
                             $sender->sendMessage("[BanItemPlus] アイテムはbanされていません");
                         }
                     break;
+
+                    case "list":
+                        $alldata = $this->banned->getAll();
+                        $sender->sendMessage("[BanItemPlus] BanItemリスト (アイテムID <使用可能ワールド>)");
+                        foreach ($alldata as $key => $value) {
+                            $worlds = "";
+                            foreach ($value as $key2 => $value2) {
+                                foreach ($value2 as $world) {
+                                    $worlds .= " ".$world;
+                                } 
+                            }
+                            if($worlds === ""){
+                                $sender->sendMessage("{$key}");
+                            }else{
+                                $sender->sendMessage("{$key} <{$worlds} >");
+                            }
+                        }
+                    break;
                     
                     default:
-                       $sender->sendMessage("[BanItemPlus] 使い方：/banitem <ban/unban/list/whiteworld>"); 
+                       $sender->sendMessage("[BanItemPlus] 使い方：/banitem <ban/unban/whiteworld/list>"); 
                     break;
                 }
             break;

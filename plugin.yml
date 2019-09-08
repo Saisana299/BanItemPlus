@@ -10,5 +10,5 @@ commands:
   banitem:
     description: ItemをBanします
     permission: true
-    usage: /banitem <ban/unban/list/whiteworld>
+    usage: /banitem <ban/unban/whiteworld/list>
 ...
